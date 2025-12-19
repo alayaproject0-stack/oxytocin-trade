@@ -1,0 +1,609 @@
+{
+  "summary": {
+    "ticker": "TDK",
+    "period": "6mo",
+    "initial_balance": 10000.0,
+    "final_balance": 15968.226203992654,
+    "roi_pct": 59.682262039926535,
+    "accuracy_pct": 81.17647058823529,
+    "system2_wake_rate_pct": 100.0,
+    "energy_saved_pct": 0.0
+  },
+  "daily_data": [
+    {
+      "date": "2025-08-15",
+      "balance": 10031.290883149144,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-18",
+      "balance": 10031.290883149144,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-08-19",
+      "balance": 10031.290883149144,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-20",
+      "balance": 10031.290883149144,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-21",
+      "balance": 10039.154001766792,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-22",
+      "balance": 10039.154001766792,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-25",
+      "balance": 10124.1412716466,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-26",
+      "balance": 10124.1412716466,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-08-27",
+      "balance": 10237.24548925133,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-08-28",
+      "balance": 10184.638650703506,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-08-29",
+      "balance": 10071.534433098775,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-09-01",
+      "balance": 10071.534433098775,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-02",
+      "balance": 10071.534433098775,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-03",
+      "balance": 10231.02038349928,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-04",
+      "balance": 10231.02038349928,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-09-05",
+      "balance": 10472.579608172657,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-08",
+      "balance": 10039.786126250612,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-09-09",
+      "balance": 10039.786126250612,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-09-10",
+      "balance": 10039.786126250612,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-11",
+      "balance": 10039.786126250612,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-12",
+      "balance": 10250.216460387934,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-16",
+      "balance": 10610.229044224196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-17",
+      "balance": 10610.229044224196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-09-18",
+      "balance": 10610.229044224196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-19",
+      "balance": 10610.229044224196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-09-22",
+      "balance": 10610.229044224196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-24",
+      "balance": 10690.043066554039,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-25",
+      "balance": 10690.043066554039,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-26",
+      "balance": 10690.043066554039,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-29",
+      "balance": 10934.328744818546,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-09-30",
+      "balance": 10934.328744818546,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-01",
+      "balance": 11109.731989604501,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-02",
+      "balance": 11401.210911087042,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-03",
+      "balance": 11839.71902305193,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-06",
+      "balance": 11679.792535158853,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-10-07",
+      "balance": 11700.428211016024,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-08",
+      "balance": 11770.073617033977,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-09",
+      "balance": 11770.073617033977,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-10",
+      "balance": 11770.073617033977,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-14",
+      "balance": 11770.073617033977,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-10-15",
+      "balance": 12042.38214860507,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-16",
+      "balance": 12042.38214860507,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-17",
+      "balance": 12042.38214860507,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-10-20",
+      "balance": 12368.878007615169,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-21",
+      "balance": 12540.984351899562,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-22",
+      "balance": 12540.984351899562,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-23",
+      "balance": 13163.087975831484,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-24",
+      "balance": 13478.044203847227,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-27",
+      "balance": 13478.044203847227,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-28",
+      "balance": 13577.59049728672,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-29",
+      "balance": 13577.59049728672,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-10-30",
+      "balance": 13577.59049728672,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-10-31",
+      "balance": 13181.386958645357,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-11-04",
+      "balance": 12764.865289817257,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-11-05",
+      "balance": 12983.285189324673,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-06",
+      "balance": 12983.285189324673,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-07",
+      "balance": 13048.383891637774,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-10",
+      "balance": 13048.383891637774,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-11",
+      "balance": 13690.544503825788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-12",
+      "balance": 13690.544503825788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-13",
+      "balance": 13690.544503825788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-14",
+      "balance": 13690.544503825788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-17",
+      "balance": 13690.544503825788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-18",
+      "balance": 13690.544503825788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-19",
+      "balance": 14248.349806426297,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-20",
+      "balance": 14248.349806426297,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-21",
+      "balance": 14514.012015371472,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-25",
+      "balance": 14514.012015371472,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false
+    },
+    {
+      "date": "2025-11-26",
+      "balance": 15028.484792906414,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-27",
+      "balance": 15049.063704007813,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-11-28",
+      "balance": 15049.063704007813,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-01",
+      "balance": 15131.0666747461,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-02",
+      "balance": 15131.0666747461,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-03",
+      "balance": 15445.454194628708,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-04",
+      "balance": 15445.454194628708,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-05",
+      "balance": 15527.982309930876,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-08",
+      "balance": 15527.982309930876,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-09",
+      "balance": 15527.982309930876,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-10",
+      "balance": 15527.982309930876,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-11",
+      "balance": 15968.226203992654,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-12",
+      "balance": 15968.226203992654,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-15",
+      "balance": 15968.226203992654,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-16",
+      "balance": 15968.226203992654,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-17",
+      "balance": 15968.226203992654,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    },
+    {
+      "date": "2025-12-18",
+      "balance": 15968.226203992654,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true
+    }
+  ]
+}
