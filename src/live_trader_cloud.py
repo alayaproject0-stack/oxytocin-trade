@@ -223,7 +223,7 @@ def main():
     # Load models
     script_dir = os.path.dirname(os.path.abspath(__file__))
     input_dim = WINDOW_SIZE * 5
-    snn = SNNClassifier(input_dim=input_dim, hidden_dim=128, output_dim=2).to(device)
+    snn = SNNClassifier(in_dim=input_dim, hidden=128, n_classes=2).to(device)
     snn_path = os.path.join(script_dir, "snn_model.pth")
     if os.path.exists(snn_path):
         snn.load_state_dict(torch.load(snn_path, map_location=device, weights_only=True))
