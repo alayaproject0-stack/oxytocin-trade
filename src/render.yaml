@@ -1,7 +1,9 @@
 services:
+  # Background Worker - Trading Daemon
   - type: worker
     name: oxytocin-live-trader
     runtime: python
+    rootDir: src
     buildCommand: pip install -r requirements.txt
     startCommand: python live_trader_cloud.py
     envVars:
@@ -12,4 +14,21 @@ services:
       - key: NEWS_API_KEY
         sync: false
       - key: ALPHA_VANTAGE_API_KEY
+        sync: false
+
+  # Static Site - Dashboard
+  - type: web
+    name: oxytocin-dashboard
+    runtime: static
+    rootDir: src/dashboard
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
+    envVars:
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_KEY
         sync: false
