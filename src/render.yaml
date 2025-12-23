@@ -21,7 +21,7 @@ services:
     name: oxytocin-dashboard
     runtime: static
     rootDir: src/dashboard
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npx vite build
     staticPublishPath: dist
     headers:
       - path: /*
