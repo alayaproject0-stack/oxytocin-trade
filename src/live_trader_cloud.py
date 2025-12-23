@@ -232,7 +232,7 @@ def main():
         print("[WARN] SNN model not found, using untrained model.")
     snn.eval()
     
-    rl = RLAgent(state_dim=2)
+    rl = RLAgent()
     rl_path = os.path.join(script_dir, "rl_agent.pth")
     if os.path.exists(rl_path):
         rl.load(rl_path)
