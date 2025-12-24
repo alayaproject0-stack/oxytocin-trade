@@ -3,22 +3,23 @@ import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend, LineChart, Line
 } from 'recharts';
-import { TrendingUp, Activity, Cpu, ShieldCheck, Zap, BarChart3, Clock, Download } from 'lucide-react';
+import { TrendingUp, Activity, Cpu, ShieldCheck, Zap, BarChart3, Clock, Download, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './index.css';
+import { supabase } from './supabaseClient';
 
 // CSV Export function
 const exportToCSV = (data, filename = 'trade_history.csv') => {
-    const headers = ['Date', 'Action', 'Price', 'Balance', 'Profit', 'Confidence', 'System2_Used', 'Correct'];
+    const headers = ['Date', 'Ticker', 'Action', 'Price', 'Profit', 'Confidence', 'System2_Used', 'Balance'];
     const rows = data.daily_data.map(trade => [
-        trade.date,
+        trade.date || trade.created_at?.split('T')[0],
+        trade.ticker || 'TDK',
         trade.action,
-        trade.price.toFixed(2),
-        trade.balance.toFixed(2),
+        (trade.price || 0).toFixed(2),
         (trade.profit || 0).toFixed(2),
-        trade.confidence.toFixed(4),
+        (trade.confidence || 0.5).toFixed(4),
         trade.system2_used ? 'Yes' : 'No',
-        trade.correct ? 'Yes' : 'No'
+        (trade.balance_after || trade.balance || 0).toFixed(2)
     ]);
 
     const csvContent = [headers, ...rows].map(row => row.join(',')).join('\n');
@@ -47,21 +48,64 @@ const StatCard = ({ title, value, icon: Icon, color }) => (
     </motion.div>
 );
 
+const INITIAL_BALANCE = 10000;
+
 const App = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [lastUpdate, setLastUpdate] = useState(null);
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            if (supabase) {
+                const [tradesRes, summaryRes] = await Promise.all([
+                    supabase.from('trade_history').select('*').order('created_at', { ascending: true }),
+                    supabase.from('dashboard_summary').select('*').eq('id', 1).single()
+                ]);
+                if (tradesRes.error) throw tradesRes.error;
+                const trades = tradesRes.data || [];
+                const summary = summaryRes.data || {};
+                const totalTrades = trades.filter(t => t.action === 'BUY' || t.action === 'SELL').length;
+                const successfulTrades = trades.filter(t => t.profit > 0).length;
+                const system2Trades = trades.filter(t => t.system2_used).length;
+                setData({
+                    summary: {
+                        ticker: 'Multi', period: 'Live',
+                        initial_balance: summary.initial_balance || INITIAL_BALANCE,
+                        final_balance: summary.current_balance || (trades.length > 0 ? trades[trades.length - 1].balance_after : INITIAL_BALANCE),
+                        current_balance: summary.current_balance || INITIAL_BALANCE,
+                        total_value: summary.total_value || INITIAL_BALANCE,
+                        roi_pct: summary.roi_pct || 0,
+                        accuracy_pct: totalTrades > 0 ? (successfulTrades / totalTrades * 100) : 0,
+                        system2_wake_rate_pct: trades.length > 0 ? (system2Trades / trades.length * 100) : 0,
+                        energy_saved_pct: trades.length > 0 ? ((trades.length - system2Trades) / trades.length * 100) : 100
+                    },
+                    daily_data: trades.map(t => ({
+                        date: t.created_at?.split('T')[0], ticker: t.ticker, action: t.action, price: t.price,
+                        profit: t.profit, confidence: t.confidence || 0.5, system2_used: t.system2_used,
+                        correct: t.profit >= 0, balance: t.balance_after
+                    }))
+                });
+                setLastUpdate(new Date().toLocaleTimeString('ja-JP'));
+            } else {
+                const res = await fetch('/data.json');
+                const json = await res.json();
+                setData(json);
+            }
+        } catch (err) {
+            console.error("Error loading data:", err);
+            try { const res = await fetch('/data.json'); setData(await res.json()); } catch (e) { console.error(e); }
+        }
+        setLoading(false);
+    };
 
     useEffect(() => {
-        fetch('/data.json')
-            .then(res => res.json())
-            .then(json => {
-                setData(json);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Error loading data:", err);
-                setLoading(false);
-            });
+        fetchData();
+        if (supabase) {
+            const interval = setInterval(fetchData, 60000);
+            return () => clearInterval(interval);
+        }
     }, []);
 
     const chartData = useMemo(() => {
@@ -94,9 +138,29 @@ const App = () => {
                         Hybrid Intelligence Performance Tracker
                     </div>
                 </div>
-                <div className="glass-card" style={{ padding: '0.6rem 1.25rem', display: 'flex', gap: '1rem', alignItems: 'center', borderRadius: '16px' }}>
-                    <Clock size={18} color="#00d2ff" />
-                    <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{summary.ticker} • {summary.period}</span>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    {lastUpdate && (
+                        <div style={{ color: '#718096', fontSize: '0.85rem' }}>
+                            更新: {lastUpdate}
+                        </div>
+                    )}
+                    <button
+                        onClick={fetchData}
+                        disabled={loading}
+                        style={{
+                            display: 'flex', alignItems: 'center', gap: '0.5rem',
+                            padding: '0.5rem 1rem', background: 'rgba(0,210,255,0.1)',
+                            border: '1px solid rgba(0,210,255,0.3)', borderRadius: '8px',
+                            color: '#00d2ff', cursor: 'pointer', fontSize: '0.85rem'
+                        }}
+                    >
+                        <RefreshCw size={16} className={loading ? 'spin' : ''} />
+                        更新
+                    </button>
+                    <div className="glass-card" style={{ padding: '0.6rem 1.25rem', display: 'flex', gap: '1rem', alignItems: 'center', borderRadius: '16px' }}>
+                        <Clock size={18} color="#00d2ff" />
+                        <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{summary.ticker} • {summary.period}</span>
+                    </div>
                 </div>
             </header>
 
