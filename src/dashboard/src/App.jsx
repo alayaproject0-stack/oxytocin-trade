@@ -187,10 +187,13 @@ const App = () => {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="glass-card">
-                <div className="stat-label">Recent Trading Activity</div>
-                <div className="trade-table-container">
-                    <table className="trade-table">
-                        <thead>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div className="stat-label">全取引ログ (All Trades)</div>
+                    <div style={{ color: '#718096', fontSize: '0.85rem' }}>{data.daily_data.length} 件</div>
+                </div>
+                <div className="trade-table-container" style={{ maxHeight: '500px', overflowY: 'auto' }}>
+                    <table className="trade-table" style={{ position: 'relative' }}>
+                        <thead style={{ position: 'sticky', top: 0, background: '#0f1419', zIndex: 1 }}>
                             <tr>
                                 <th>Date</th>
                                 <th>Action</th>
@@ -202,7 +205,7 @@ const App = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.daily_data.slice(-15).reverse().map((trade, i) => {
+                            {[...data.daily_data].reverse().map((trade, i) => {
                                 // Calculate estimated shares (using balance * 0.2 / price as used in live_trader)
                                 const estimatedShares = trade.shares || (trade.action === 'BUY' ? (trade.balance * 0.2 / trade.price).toFixed(4) : '-');
                                 return (
@@ -218,7 +221,7 @@ const App = () => {
                                             {trade.action === 'BUY' || trade.action === 'SELL' ? estimatedShares : '-'}
                                         </td>
                                         <td style={{ color: (trade.profit || 0) >= 0 ? '#00f5d4' : '#ff4d4d', fontWeight: 600 }}>
-                                            {(trade.profit || 0) >= 0 ? '+' : ''}{(trade.profit || 0).toFixed(2)}
+                                            {(trade.profit || 0) >= 0 ? '+' : ''}¥{Math.round(trade.profit || 0).toLocaleString()}
                                         </td>
                                         <td>
                                             {trade.system2_used ?
