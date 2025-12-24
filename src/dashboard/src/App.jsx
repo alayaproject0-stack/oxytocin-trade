@@ -77,10 +77,10 @@ const App = () => {
             </header>
 
             {/* Portfolio Summary - 元本と損益 */}
-            <motion.section 
-                initial={{ opacity: 0, y: 20 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                className="glass-card" 
+            <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="glass-card"
                 style={{ marginBottom: '1.5rem', padding: '1.5rem' }}
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -102,10 +102,10 @@ const App = () => {
                     </div>
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>損益 (Profit/Loss)</div>
-                        <div style={{ 
-                            fontSize: '1.8rem', 
-                            fontWeight: 700, 
-                            color: ((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '#00f5d4' : '#ff4d4d' 
+                        <div style={{
+                            fontSize: '1.8rem',
+                            fontWeight: 700,
+                            color: ((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '#00f5d4' : '#ff4d4d'
                         }}>
                             {((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '+' : ''}
                             ${((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -113,10 +113,10 @@ const App = () => {
                     </div>
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>ROI</div>
-                        <div style={{ 
-                            fontSize: '1.8rem', 
-                            fontWeight: 700, 
-                            color: summary.roi_pct >= 0 ? '#00f5d4' : '#ff4d4d' 
+                        <div style={{
+                            fontSize: '1.8rem',
+                            fontWeight: 700,
+                            color: summary.roi_pct >= 0 ? '#00f5d4' : '#ff4d4d'
                         }}>
                             {summary.roi_pct >= 0 ? '+' : ''}{summary.roi_pct.toFixed(2)}%
                         </div>
@@ -195,35 +195,43 @@ const App = () => {
                                 <th>Date</th>
                                 <th>Action</th>
                                 <th>Price</th>
+                                <th>Shares</th>
                                 <th>Profit</th>
                                 <th>System</th>
                                 <th>Success</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data.daily_data.slice(-15).reverse().map((trade, i) => (
-                                <tr key={i}>
-                                    <td>{trade.date}</td>
-                                    <td>
-                                        <span className={`badge badge-${trade.action.toLowerCase()}`}>
-                                            {trade.action}
-                                        </span>
-                                    </td>
-                                    <td>${trade.price.toFixed(2)}</td>
-                                    <td style={{ color: (trade.profit || 0) >= 0 ? '#00f5d4' : '#ff4d4d', fontWeight: 600 }}>
-                                        {(trade.profit || 0) >= 0 ? '+' : ''}{(trade.profit || 0).toFixed(2)}
-                                    </td>
-                                    <td>
-                                        {trade.system2_used ?
-                                            <span className="badge badge-s2">System 2</span> :
-                                            <span className="badge" style={{ background: 'rgba(0,210,255,0.1)', color: '#00d2ff' }}>System 1</span>
-                                        }
-                                    </td>
-                                    <td style={{ color: trade.correct ? '#00f5d4' : '#ff4d4d' }}>
-                                        {trade.correct ? '✓ Success' : '✗ Miss'}
-                                    </td>
-                                </tr>
-                            ))}
+                            {data.daily_data.slice(-15).reverse().map((trade, i) => {
+                                // Calculate estimated shares (using balance * 0.2 / price as used in live_trader)
+                                const estimatedShares = trade.shares || (trade.action === 'BUY' ? (trade.balance * 0.2 / trade.price).toFixed(4) : '-');
+                                return (
+                                    <tr key={i}>
+                                        <td>{trade.date}</td>
+                                        <td>
+                                            <span className={`badge badge-${trade.action.toLowerCase()}`}>
+                                                {trade.action}
+                                            </span>
+                                        </td>
+                                        <td>${trade.price.toFixed(2)}</td>
+                                        <td style={{ color: '#718096' }}>
+                                            {trade.action === 'BUY' || trade.action === 'SELL' ? estimatedShares : '-'}
+                                        </td>
+                                        <td style={{ color: (trade.profit || 0) >= 0 ? '#00f5d4' : '#ff4d4d', fontWeight: 600 }}>
+                                            {(trade.profit || 0) >= 0 ? '+' : ''}{(trade.profit || 0).toFixed(2)}
+                                        </td>
+                                        <td>
+                                            {trade.system2_used ?
+                                                <span className="badge badge-s2">System 2</span> :
+                                                <span className="badge" style={{ background: 'rgba(0,210,255,0.1)', color: '#00d2ff' }}>System 1</span>
+                                            }
+                                        </td>
+                                        <td style={{ color: trade.correct ? '#00f5d4' : '#ff4d4d' }}>
+                                            {trade.correct ? '✓ Success' : '✗ Miss'}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>
