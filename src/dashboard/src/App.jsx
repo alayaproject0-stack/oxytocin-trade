@@ -3,9 +3,33 @@ import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend, LineChart, Line
 } from 'recharts';
-import { TrendingUp, Activity, Cpu, ShieldCheck, Zap, BarChart3, Clock } from 'lucide-react';
+import { TrendingUp, Activity, Cpu, ShieldCheck, Zap, BarChart3, Clock, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './index.css';
+
+// CSV Export function
+const exportToCSV = (data, filename = 'trade_history.csv') => {
+    const headers = ['Date', 'Action', 'Price', 'Balance', 'Profit', 'Confidence', 'System2_Used', 'Correct'];
+    const rows = data.daily_data.map(trade => [
+        trade.date,
+        trade.action,
+        trade.price.toFixed(2),
+        trade.balance.toFixed(2),
+        (trade.profit || 0).toFixed(2),
+        trade.confidence.toFixed(4),
+        trade.system2_used ? 'Yes' : 'No',
+        trade.correct ? 'Yes' : 'No'
+    ]);
+
+    const csvContent = [headers, ...rows].map(row => row.join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+};
 
 const StatCard = ({ title, value, icon: Icon, color }) => (
     <motion.div
@@ -189,7 +213,28 @@ const App = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="glass-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                     <div className="stat-label">全取引ログ (All Trades)</div>
-                    <div style={{ color: '#718096', fontSize: '0.85rem' }}>{data.daily_data.length} 件</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <span style={{ color: '#718096', fontSize: '0.85rem' }}>{data.daily_data.length} 件</span>
+                        <button
+                            onClick={() => exportToCSV(data)}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                padding: '0.5rem 1rem',
+                                background: 'linear-gradient(135deg, #00d2ff 0%, #3aedff 100%)',
+                                border: 'none',
+                                borderRadius: '8px',
+                                color: '#0a0e14',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                fontSize: '0.85rem'
+                            }}
+                        >
+                            <Download size={16} />
+                            CSV出力
+                        </button>
+                    </div>
                 </div>
                 <div className="trade-table-container" style={{ maxHeight: '500px', overflowY: 'auto' }}>
                     <table className="trade-table" style={{ position: 'relative' }}>
