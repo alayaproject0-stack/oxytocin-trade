@@ -76,11 +76,59 @@ const App = () => {
                 </div>
             </header>
 
+            {/* Portfolio Summary - 元本と損益 */}
+            <motion.section 
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                className="glass-card" 
+                style={{ marginBottom: '1.5rem', padding: '1.5rem' }}
+            >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div className="stat-label" style={{ fontSize: '1.1rem' }}>Portfolio Summary</div>
+                    <TrendingUp size={20} color={summary.roi_pct >= 0 ? '#00f5d4' : '#ff4d4d'} />
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+                    <div>
+                        <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>元本 (Initial)</div>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>
+                            ${(summary.initial_balance || 10000).toLocaleString()}
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>現在価値 (Current)</div>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#00d2ff' }}>
+                            ${(summary.final_balance || summary.current_balance || 10000).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>損益 (Profit/Loss)</div>
+                        <div style={{ 
+                            fontSize: '1.8rem', 
+                            fontWeight: 700, 
+                            color: ((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '#00f5d4' : '#ff4d4d' 
+                        }}>
+                            {((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '+' : ''}
+                            ${((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>ROI</div>
+                        <div style={{ 
+                            fontSize: '1.8rem', 
+                            fontWeight: 700, 
+                            color: summary.roi_pct >= 0 ? '#00f5d4' : '#ff4d4d' 
+                        }}>
+                            {summary.roi_pct >= 0 ? '+' : ''}{summary.roi_pct.toFixed(2)}%
+                        </div>
+                    </div>
+                </div>
+            </motion.section>
+
             <section className="stats-grid">
-                <StatCard title="ROI" value={`${summary.roi_pct.toFixed(2)}%`} icon={TrendingUp} color="#00f5d4" />
                 <StatCard title="Accuracy" value={`${summary.accuracy_pct.toFixed(1)}%`} icon={ShieldCheck} color="#3aedff" />
                 <StatCard title="S2 Usage" value={`${summary.system2_wake_rate_pct.toFixed(1)}%`} icon={Zap} color="#ff00c1" />
                 <StatCard title="Efficiency" value={`${summary.energy_saved_pct.toFixed(1)}%`} icon={Cpu} color="#00d2ff" />
+                <StatCard title="Total Trades" value={data.daily_data.length} icon={Activity} color="#00f5d4" />
             </section>
 
             <div className="charts-grid">
