@@ -305,6 +305,7 @@ const App = () => {
                         <thead style={{ position: 'sticky', top: 0, background: '#0f1419', zIndex: 1 }}>
                             <tr>
                                 <th>Date</th>
+                                <th>Ticker</th>
                                 <th>Action</th>
                                 <th>Price</th>
                                 <th>Shares</th>
@@ -316,16 +317,17 @@ const App = () => {
                         <tbody>
                             {[...data.daily_data].reverse().map((trade, i) => {
                                 // Calculate estimated shares (using balance * 0.2 / price as used in live_trader)
-                                const estimatedShares = trade.shares || (trade.action === 'BUY' ? (trade.balance * 0.2 / trade.price).toFixed(4) : '-');
+                                const estimatedShares = trade.shares || (trade.action === 'BUY' ? ((trade.balance || 10000) * 0.2 / (trade.price || 1)).toFixed(4) : '-');
                                 return (
                                     <tr key={i}>
                                         <td>{trade.date}</td>
+                                        <td style={{ color: '#00d2ff', fontWeight: 600 }}>{trade.ticker || '-'}</td>
                                         <td>
-                                            <span className={`badge badge-${trade.action.toLowerCase()}`}>
+                                            <span className={`badge badge-${(trade.action || 'hold').toLowerCase()}`}>
                                                 {trade.action}
                                             </span>
                                         </td>
-                                        <td>¥{trade.price.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
+                                        <td>¥{(trade.price || 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
                                         <td style={{ color: '#718096' }}>
                                             {trade.action === 'BUY' || trade.action === 'SELL' ? estimatedShares : '-'}
                                         </td>
