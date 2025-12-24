@@ -91,13 +91,13 @@ const App = () => {
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>元本 (Initial)</div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>
-                            ${(summary.initial_balance || 10000).toLocaleString()}
+                            ¥{(summary.initial_balance || 10000).toLocaleString()}
                         </div>
                     </div>
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>現在価値 (Current)</div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#00d2ff' }}>
-                            ${(summary.final_balance || summary.current_balance || 10000).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            ¥{(summary.final_balance || summary.current_balance || 10000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
                     </div>
                     <div>
@@ -108,7 +108,7 @@ const App = () => {
                             color: ((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '#00f5d4' : '#ff4d4d'
                         }}>
                             {((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '+' : ''}
-                            ${((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            ¥{((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
                     </div>
                     <div>
@@ -134,7 +134,7 @@ const App = () => {
             <div className="charts-grid">
                 <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="glass-card chart-container">
                     <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div className="stat-label">Equity Curve (USD)</div>
+                        <div className="stat-label">Equity Curve (JPY)</div>
                         <BarChart3 size={18} color="#00d2ff" />
                     </div>
                     <ResponsiveContainer width="100%" height={300}>
@@ -213,7 +213,7 @@ const App = () => {
                                                 {trade.action}
                                             </span>
                                         </td>
-                                        <td>${trade.price.toFixed(2)}</td>
+                                        <td>¥{trade.price.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
                                         <td style={{ color: '#718096' }}>
                                             {trade.action === 'BUY' || trade.action === 'SELL' ? estimatedShares : '-'}
                                         </td>
