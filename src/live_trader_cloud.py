@@ -40,6 +40,11 @@ FETCH_PERIOD = "1d"
 WINDOW_SIZE = 20
 CHECK_INTERVAL_SECONDS = 60  # 1 minute
 
+# Risk Management - Stop Loss / Take Profit
+STOP_LOSS_PCT = -0.02      # -2% で損切り（浅めに設定）
+TAKE_PROFIT_PCT = 0.05     # +5% で利確（利を伸ばす）
+POSITION_SIZE_PCT = 0.15   # ポジションサイズを15%に縮小（リスク管理）
+
 # Trading hours (JST)
 TRADING_START_HOUR = 9
 TRADING_START_MIN = 0
@@ -280,28 +285,53 @@ def main():
             action = "HOLD"
             profit = 0.0
             
-            if prediction == 1:  # Bullish
-                if pos is None:
-                    shares = state["balance"] * 0.2 / current_price
-                    if shares > 0:
-                        state["positions"][ticker] = {
-                            "shares": shares,
-                            "entry_price": current_price
-                        }
-                        state["balance"] -= shares * current_price
-                        action = "BUY"
-                        save_position_to_supabase(ticker, shares, current_price)
-                        print(f"  [{ticker}] BUY {shares:.4f} shares @ ${current_price:.2f}")
-                else:
-                    action = "HOLDING"
-            else:  # Bearish
-                if pos is not None:
-                    profit = (current_price - pos["entry_price"]) * pos["shares"]
+            # Check existing position for stop-loss / take-profit
+            if pos is not None:
+                entry_price = pos["entry_price"]
+                price_change_pct = (current_price - entry_price) / entry_price
+                
+                # Stop-loss triggered
+                if price_change_pct <= STOP_LOSS_PCT:
+                    profit = (current_price - entry_price) * pos["shares"]
+                    state["balance"] += pos["shares"] * current_price
+                    del state["positions"][ticker]
+                    action = "STOP_LOSS"
+                    delete_position_from_supabase(ticker)
+                    print(f"  [{ticker}] STOP_LOSS @ ¥{current_price:.0f} | Loss: ¥{profit:.0f} ({price_change_pct*100:.1f}%)")
+                
+                # Take-profit triggered
+                elif price_change_pct >= TAKE_PROFIT_PCT:
+                    profit = (current_price - entry_price) * pos["shares"]
+                    state["balance"] += pos["shares"] * current_price
+                    del state["positions"][ticker]
+                    action = "TAKE_PROFIT"
+                    delete_position_from_supabase(ticker)
+                    print(f"  [{ticker}] TAKE_PROFIT @ ¥{current_price:.0f} | Profit: ¥{profit:.0f} ({price_change_pct*100:.1f}%)")
+                
+                # Model says sell (bearish)
+                elif prediction == 0:
+                    profit = (current_price - entry_price) * pos["shares"]
                     state["balance"] += pos["shares"] * current_price
                     del state["positions"][ticker]
                     action = "SELL"
                     delete_position_from_supabase(ticker)
-                    print(f"  [{ticker}] SELL @ ${current_price:.2f} | Profit: ${profit:.2f}")
+                    print(f"  [{ticker}] SELL @ ¥{current_price:.0f} | P/L: ¥{profit:.0f}")
+                
+                else:
+                    action = "HOLDING"
+            
+            # No position - consider buying
+            elif prediction == 1:  # Bullish
+                shares = state["balance"] * POSITION_SIZE_PCT / current_price
+                if shares > 0 and state["balance"] > 0:
+                    state["positions"][ticker] = {
+                        "shares": shares,
+                        "entry_price": current_price
+                    }
+                    state["balance"] -= shares * current_price
+                    action = "BUY"
+                    save_position_to_supabase(ticker, shares, current_price)
+                    print(f"  [{ticker}] BUY {shares:.4f} shares @ ¥{current_price:.0f}")
             
             # Save trade
             save_trade_to_supabase(ticker, action, current_price, profit, confidence, system2_used, state["balance"])
