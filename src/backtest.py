@@ -25,10 +25,11 @@ INITIAL_BALANCE = 10000.0
 WINDOW_SIZE = 20
 
 # Risk Management
-STOP_LOSS_PCT = -0.02
-TAKE_PROFIT_PCT = 0.05
-POSITION_SIZE_PCT = 0.15
-MIN_CONFIDENCE = 0.55
+# Risk Management
+STOP_LOSS_PCT = -0.04
+TAKE_PROFIT_PCT = 10.0  # Effectively disabled, rely on Trailing Stop
+POSITION_SIZE_PCT = 0.60
+MIN_CONFIDENCE = 0.51
 
 
 def fetch_historical_data(ticker: str, period: str = "6mo"):
@@ -81,8 +82,55 @@ def compute_features(df: pd.DataFrame) -> pd.DataFrame:
     return features.fillna(0)
 
 
-def run_inference(snn, rl, features: np.ndarray, device):
-    """Run model inference."""
+def compute_system2_signal(df: pd.DataFrame, idx: int) -> int:
+    """
+    System 2 Logic: Rigid technical confirmation
+    Returns: 1 (Buy), 0 (Sell/Hold)
+    """
+    if idx < 30: return 0
+    
+    # Slice window for calculation
+    window = df.iloc[idx-30:idx+1].copy()
+    close = window['Close']
+    
+    # 1. RSI (14)
+    delta = close.diff()
+    gain = delta.where(delta > 0, 0).rolling(14).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
+    rs = gain / loss.replace(0, 1e-10)
+    rsi = 100 - (100 / (1 + rs))
+    current_rsi = rsi.iloc[-1]
+    
+    # 2. Bollinger Bands (20, 2)
+    sma = close.rolling(20).mean()
+    std = close.rolling(20).std()
+    bb_low = sma - 2 * std
+    current_bb_low = bb_low.iloc[-1]
+    current_close = close.iloc[-1]
+    
+    # 3. MACD (12, 26, 9)
+    ema12 = close.ewm(span=12, adjust=False).mean()
+    ema26 = close.ewm(span=26, adjust=False).mean()
+    macd = ema12 - ema26
+    signal = macd.ewm(span=9, adjust=False).mean()
+    hist = macd - signal
+    
+    # Logic:
+    # - RSI < 40 (Oversold but not extreme)
+    # - Price near Lower Band (Dip buying)
+    # - MACD Histogram increasing (Momentum shift)
+    
+    score = 0
+    if float(current_rsi) < 45: score += 1
+    if float(current_close) <= float(current_bb_low) * 1.02: score += 1
+    if float(hist.iloc[-1]) > float(hist.iloc[-2]): score += 1
+    
+    # Relaxed: Need 2/3 confirmation
+    return 1 if score >= 2 else 0
+
+
+def run_inference(snn, rl, features: np.ndarray, df_raw: pd.DataFrame, idx: int, device):
+    """Run model inference (Pure SNN)."""
     with torch.no_grad():
         x = torch.tensor(features[-WINDOW_SIZE:], dtype=torch.float32).unsqueeze(0).to(device)
         spk, mem = snn(x)
@@ -90,9 +138,9 @@ def run_inference(snn, rl, features: np.ndarray, device):
         pred = spike_sum.argmax(dim=1).item()
         conf = torch.softmax(spike_sum, dim=1).max().item()
         
-        # RL gate decision (simplified for backtest)
-        system2_used = conf < 0.7
-        
+        # System 2 DISABLED for Aggressive Mode
+        system2_used = False
+                
     return pred, conf, system2_used
 
 
@@ -141,7 +189,17 @@ def run_backtest(ticker: str, period: str, device):
         features = features_df.iloc[:i+1].values
         
         # Run inference
-        pred, conf, system2_used = run_inference(snn, rl, features, device)
+        pred, conf, system2_used = run_inference(snn, rl, features, df, i, device)
+        
+        # Trend Filter: Price > SMA20
+        # sma_20 is at index -3 in features (based on compute_features)
+        # However, features are normalized. Let's use raw price > sma_20 from fetch logic if possible
+        # Simplified: Use normalized sma_20 from features. 
+        # If current price > sma_20, it's an uptrend.
+        # In normalized features: price is not directly there, but sma_20 is.
+        # Let's calculate SMA20 explicitly here for clarity
+        sma_20 = np.mean(close_prices[i-20:i]) if i >= 20 else current_price
+        is_uptrend = current_price > sma_20
         
         action = "HOLD"
         profit = 0.0
@@ -149,20 +207,38 @@ def run_backtest(ticker: str, period: str, device):
         # Check existing position
         if position is not None:
             entry_price = position["entry_price"]
+            
+            # Trailing Stop Management
+            # Update Highest Price for Trailing Stop
+            highest_price = position.get("highest_price", entry_price)
+            if current_price > highest_price:
+                highest_price = current_price
+                # Update in local state implies update in logic, need to persist if we were fully stateful, but for now in-mem
+                position["highest_price"] = highest_price
+            
             price_change_pct = (current_price - entry_price) / entry_price
+            trailing_stop_price = highest_price * (1 - 0.03) # 3.0% trailing stop (Aggressive)
+            
+            # Trailing Stop Triggered
+            if current_price < trailing_stop_price and price_change_pct > 0:
+                 profit = (current_price - entry_price) * position["shares"]
+                 balance += position["shares"] * current_price
+                 action = "TRAILING_STOP"
+                 position = None
             
             # Stop-loss
-            if price_change_pct <= STOP_LOSS_PCT:
+            elif price_change_pct <= STOP_LOSS_PCT:
                 profit = (current_price - entry_price) * position["shares"]
                 balance += position["shares"] * current_price
                 action = "STOP_LOSS"
                 position = None
             
-            # Take-profit
-            elif price_change_pct >= TAKE_PROFIT_PCT:
+            # Take-profit (Partial or Full - here Full for simplicity, but Trailing Stop handles big runners)
+            # Replaced fixed TAKE_PROFIT with Trailing Stop preference, but keep emergency take profit if price spikes
+            elif price_change_pct >= 0.10: # 10% hard target
                 profit = (current_price - entry_price) * position["shares"]
                 balance += position["shares"] * current_price
-                action = "TAKE_PROFIT"
+                action = "TAKE_PROFIT_Max"
                 position = None
             
             # Model sell signal
@@ -175,8 +251,8 @@ def run_backtest(ticker: str, period: str, device):
             else:
                 action = "HOLDING"
         
-        # Consider buying
-        elif pred == 1 and conf >= MIN_CONFIDENCE:
+        # Consider buying - ONLY in Uptrend
+        elif pred == 1 and conf >= MIN_CONFIDENCE and is_uptrend:
             shares = balance * POSITION_SIZE_PCT / current_price
             if shares > 0:
                 position = {
