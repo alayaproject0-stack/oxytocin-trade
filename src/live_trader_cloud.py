@@ -41,12 +41,14 @@ WINDOW_SIZE = 20
 CHECK_INTERVAL_SECONDS = 60  # 1 minute
 
 # Risk Management - Stop Loss / Take Profit
-STOP_LOSS_PCT = -0.02      # -2% で損切り（浅めに設定）
-TAKE_PROFIT_PCT = 0.05     # +5% で利確（利を伸ばす）
-POSITION_SIZE_PCT = 0.15   # ポジションサイズを15%に縮小（リスク管理）
+# Risk Management - Stop Loss / Take Profit
+STOP_LOSS_PCT = -0.04      # -4% で損切り（ボラティリティ許容）
+TAKE_PROFIT_PCT = 10.0     # 実質無効化（トレーリングストップで伸ばす）
+POSITION_SIZE_PCT = 0.60   # ポジションサイズを60%に拡大（超攻撃的）
 
 # Entry Filter - 取引頻度を減らす
-MIN_CONFIDENCE = 0.55      # 自信度55%以上でのみエントリー（調整）
+# Entry Filter - 取引頻度を増やす
+MIN_CONFIDENCE = 0.51      # 自信度51%（迷ったらGO）
 MIN_HOLD_TICKS = 5         # 最低5ティック（5分）保有してから売却判断
 
 # Trading hours (JST)
@@ -309,7 +311,7 @@ def main():
                     # but for this iteration we'll keep it simple or assume reliable runtime.
                 
                 price_change_pct = (current_price - entry_price) / entry_price
-                trailing_stop_price = highest_price * (1 - 0.015) # 1.5% trailing stop
+                trailing_stop_price = highest_price * (1 - 0.03) # 3.0% trailing stop (Aggressive)
                 
                 # Stop-loss triggered
                 if price_change_pct <= STOP_LOSS_PCT:
