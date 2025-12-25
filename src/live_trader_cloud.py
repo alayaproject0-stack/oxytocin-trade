@@ -202,7 +202,10 @@ def prepare_features(df):
     df_norm = df[['Returns', 'RSI', 'MACD', 'BB_High', 'BB_Low']].copy()
     df_norm = (df_norm - df_norm.mean()) / (df_norm.std() + 1e-8)
     
-    return df_norm, df['Close'].values
+    # Calculate SMA20 for Trend Filter (not used as model feature but for separate logic)
+    sma_20 = df['Close'].rolling(window=20).mean().values
+    
+    return df_norm, df['Close'].values, sma_20
 
 
 def run_inference(snn, rl, features, device):
@@ -277,8 +280,11 @@ def main():
             if result is None:
                 continue
             
-            features_df, close_prices = result
+            features_df, close_prices, sma_20_values = result
             current_price = close_prices[-1]
+            current_sma_20 = sma_20_values[-1] if not np.isnan(sma_20_values[-1]) else current_price
+            
+            is_uptrend = current_price > current_sma_20
             tickers_data[ticker] = current_price
             
             prediction, confidence, system2_used = run_inference(
@@ -289,10 +295,21 @@ def main():
             action = "HOLD"
             profit = 0.0
             
-            # Check existing position for stop-loss / take-profit
+            # Check existing position for stop-loss / take-profit / trailing-stop
             if pos is not None:
                 entry_price = pos["entry_price"]
+                
+                # Update Highest Price for Trailing Stop
+                highest_price = pos.get("highest_price", entry_price)
+                if current_price > highest_price:
+                    highest_price = current_price
+                    # Update in local state implies update in logic, need to persist if we were fully stateful, but for now in-mem
+                    pos["highest_price"] = highest_price
+                    # Note: We should ideally update Supabase too if we want persistence across restarts for this, 
+                    # but for this iteration we'll keep it simple or assume reliable runtime.
+                
                 price_change_pct = (current_price - entry_price) / entry_price
+                trailing_stop_price = highest_price * (1 - 0.015) # 1.5% trailing stop
                 
                 # Stop-loss triggered
                 if price_change_pct <= STOP_LOSS_PCT:
@@ -303,14 +320,23 @@ def main():
                     delete_position_from_supabase(ticker)
                     print(f"  [{ticker}] STOP_LOSS @ ¥{current_price:.0f} | Loss: ¥{profit:.0f} ({price_change_pct*100:.1f}%)")
                 
-                # Take-profit triggered
-                elif price_change_pct >= TAKE_PROFIT_PCT:
+                # Trailing Stop Triggered
+                elif current_price < trailing_stop_price and price_change_pct > 0:
                     profit = (current_price - entry_price) * pos["shares"]
                     state["balance"] += pos["shares"] * current_price
                     del state["positions"][ticker]
-                    action = "TAKE_PROFIT"
+                    action = "TRAILING_STOP"
                     delete_position_from_supabase(ticker)
-                    print(f"  [{ticker}] TAKE_PROFIT @ ¥{current_price:.0f} | Profit: ¥{profit:.0f} ({price_change_pct*100:.1f}%)")
+                    print(f"  [{ticker}] TRAILING_STOP @ ¥{current_price:.0f} | Profit: ¥{profit:.0f} (Peak: ¥{highest_price:.0f})")
+
+                # Take-profit triggered (Hardcap fallback or just keep trailing. Let's keep a hard cap at 10% for safety)
+                elif price_change_pct >= 0.10:
+                    profit = (current_price - entry_price) * pos["shares"]
+                    state["balance"] += pos["shares"] * current_price
+                    del state["positions"][ticker]
+                    action = "TAKE_PROFIT_Max"
+                    delete_position_from_supabase(ticker)
+                    print(f"  [{ticker}] TAKE_PROFIT_Max @ ¥{current_price:.0f} | Profit: ¥{profit:.0f} ({price_change_pct*100:.1f}%)")
                 
                 # Model says sell (bearish)
                 elif prediction == 0:
@@ -323,22 +349,22 @@ def main():
                 
                 else:
                     action = "HOLDING"
-                    # Increment hold ticks
                     pos["hold_ticks"] = pos.get("hold_ticks", 0) + 1
             
-            # No position - consider buying (with confidence filter)
-            elif prediction == 1 and confidence >= MIN_CONFIDENCE:  # Bullish + High confidence
+            # No position - consider buying (with confidence filter AND Trend Filter)
+            elif prediction == 1 and confidence >= MIN_CONFIDENCE and is_uptrend:  # Bullish + High confidence + Uptrend
                 shares = state["balance"] * POSITION_SIZE_PCT / current_price
                 if shares > 0 and state["balance"] > 0:
                     state["positions"][ticker] = {
                         "shares": shares,
                         "entry_price": current_price,
-                        "hold_ticks": 0
+                        "hold_ticks": 0,
+                        "highest_price": current_price
                     }
                     state["balance"] -= shares * current_price
                     action = "BUY"
                     save_position_to_supabase(ticker, shares, current_price)
-                    print(f"  [{ticker}] BUY {shares:.4f} shares @ ¥{current_price:.0f} (conf: {confidence:.2f})")
+                    print(f"  [{ticker}] BUY {shares:.4f} shares @ ¥{current_price:.0f} (conf: {confidence:.2f}, sma20: {current_sma_20:.0f})")
             
             # Save trade (only if action is not HOLD to reduce noise)
             if action != "HOLD":
