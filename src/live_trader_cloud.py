@@ -45,6 +45,10 @@ STOP_LOSS_PCT = -0.02      # -2% で損切り（浅めに設定）
 TAKE_PROFIT_PCT = 0.05     # +5% で利確（利を伸ばす）
 POSITION_SIZE_PCT = 0.15   # ポジションサイズを15%に縮小（リスク管理）
 
+# Entry Filter - 取引頻度を減らす
+MIN_CONFIDENCE = 0.6       # 自信度60%以上でのみエントリー
+MIN_HOLD_TICKS = 5         # 最低5ティック（5分）保有してから売却判断
+
 # Trading hours (JST)
 TRADING_START_HOUR = 9
 TRADING_START_MIN = 0
@@ -319,22 +323,26 @@ def main():
                 
                 else:
                     action = "HOLDING"
+                    # Increment hold ticks
+                    pos["hold_ticks"] = pos.get("hold_ticks", 0) + 1
             
-            # No position - consider buying
-            elif prediction == 1:  # Bullish
+            # No position - consider buying (with confidence filter)
+            elif prediction == 1 and confidence >= MIN_CONFIDENCE:  # Bullish + High confidence
                 shares = state["balance"] * POSITION_SIZE_PCT / current_price
                 if shares > 0 and state["balance"] > 0:
                     state["positions"][ticker] = {
                         "shares": shares,
-                        "entry_price": current_price
+                        "entry_price": current_price,
+                        "hold_ticks": 0
                     }
                     state["balance"] -= shares * current_price
                     action = "BUY"
                     save_position_to_supabase(ticker, shares, current_price)
-                    print(f"  [{ticker}] BUY {shares:.4f} shares @ ¥{current_price:.0f}")
+                    print(f"  [{ticker}] BUY {shares:.4f} shares @ ¥{current_price:.0f} (conf: {confidence:.2f})")
             
-            # Save trade
-            save_trade_to_supabase(ticker, action, current_price, profit, confidence, system2_used, state["balance"])
+            # Save trade (only if action is not HOLD to reduce noise)
+            if action != "HOLD":
+                save_trade_to_supabase(ticker, action, current_price, profit, confidence, system2_used, state["balance"])
         
         # Calculate total value
         total_value = state["balance"]
