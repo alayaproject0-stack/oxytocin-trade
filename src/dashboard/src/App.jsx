@@ -60,7 +60,7 @@ const App = () => {
         try {
             if (supabase) {
                 const [tradesRes, summaryRes] = await Promise.all([
-                    supabase.from('trade_history').select('*').order('created_at', { ascending: true }),
+                    supabase.from('trade_history').select('*').order('created_at', { ascending: false }).limit(5000),
                     supabase.from('dashboard_summary').select('*').eq('id', 1).single()
                 ]);
                 if (tradesRes.error) throw tradesRes.error;
