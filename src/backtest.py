@@ -28,7 +28,7 @@ WINDOW_SIZE = 20
 STOP_LOSS_PCT = -0.02
 TAKE_PROFIT_PCT = 0.05
 POSITION_SIZE_PCT = 0.15
-MIN_CONFIDENCE = 0.6
+MIN_CONFIDENCE = 0.55
 
 
 def fetch_historical_data(ticker: str, period: str = "6mo"):

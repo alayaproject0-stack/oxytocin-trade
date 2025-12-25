@@ -46,7 +46,7 @@ TAKE_PROFIT_PCT = 0.05     # +5% で利確（利を伸ばす）
 POSITION_SIZE_PCT = 0.15   # ポジションサイズを15%に縮小（リスク管理）
 
 # Entry Filter - 取引頻度を減らす
-MIN_CONFIDENCE = 0.6       # 自信度60%以上でのみエントリー
+MIN_CONFIDENCE = 0.55      # 自信度55%以上でのみエントリー（調整）
 MIN_HOLD_TICKS = 5         # 最低5ティック（5分）保有してから売却判断
 
 # Trading hours (JST)
