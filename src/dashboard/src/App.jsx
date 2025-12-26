@@ -163,6 +163,19 @@ const App = () => {
 
     const { summary } = data;
 
+    // Configured Initial Balance
+    const displayInitial = INITIAL_BALANCE; // 1,000,000
+
+    // Check if DB data is from the old '10k' era
+    // If DB's initial balance is significantly different (e.g., < 100,000), assume it's old data
+    const isOldData = (summary.initial_balance || 0) < 500000;
+
+    // If old data, visualize a "Fresh Start" (1M flat) until new data comes in
+    // Otherwise use the livedata
+    const displayCurrent = isOldData ? INITIAL_BALANCE : (summary.final_balance || summary.current_balance || 0);
+    const displayProfit = displayCurrent - displayInitial;
+    const displayRoi = (displayProfit / displayInitial) * 100;
+
     const pieData = [
         { name: 'System 1 (SNN)', value: parseFloat((100 - summary.system2_wake_rate_pct).toFixed(1)) },
         { name: 'System 2 (FinBERT)', value: parseFloat(summary.system2_wake_rate_pct.toFixed(1)) },
@@ -214,19 +227,20 @@ const App = () => {
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                     <div className="stat-label" style={{ fontSize: '1.1rem' }}>Portfolio Summary</div>
-                    <TrendingUp size={20} color={summary.roi_pct >= 0 ? '#00f5d4' : '#ff4d4d'} />
+                    <TrendingUp size={20} color={displayRoi >= 0 ? '#00f5d4' : '#ff4d4d'} />
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>元本 (Initial)</div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>
-                            ¥{(summary.initial_balance || 1000000).toLocaleString()}
+                            ¥{displayInitial.toLocaleString()}
                         </div>
                     </div>
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>現在価値 (Current)</div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#00d2ff' }}>
-                            ¥{(summary.final_balance || summary.current_balance || 1000000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                            {/* If outdated, show Initial, else show DB value */}
+                            ¥{displayCurrent.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
                     </div>
                     <div>
@@ -234,10 +248,10 @@ const App = () => {
                         <div style={{
                             fontSize: '1.8rem',
                             fontWeight: 700,
-                            color: ((summary.final_balance || summary.current_balance || 1000000) - (summary.initial_balance || 1000000)) >= 0 ? '#00f5d4' : '#ff4d4d'
+                            color: displayProfit >= 0 ? '#00f5d4' : '#ff4d4d'
                         }}>
-                            {((summary.final_balance || summary.current_balance || 1000000) - (summary.initial_balance || 1000000)) >= 0 ? '+' : ''}
-                            ¥{((summary.final_balance || summary.current_balance || 1000000) - (summary.initial_balance || 1000000)).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                            {displayProfit >= 0 ? '+' : ''}
+                            ¥{displayProfit.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
                     </div>
                     <div>
@@ -245,9 +259,9 @@ const App = () => {
                         <div style={{
                             fontSize: '1.8rem',
                             fontWeight: 700,
-                            color: summary.roi_pct >= 0 ? '#00f5d4' : '#ff4d4d'
+                            color: displayRoi >= 0 ? '#00f5d4' : '#ff4d4d'
                         }}>
-                            {summary.roi_pct >= 0 ? '+' : ''}{summary.roi_pct.toFixed(2)}%
+                            {displayRoi >= 0 ? '+' : ''}{displayRoi.toFixed(2)}%
                         </div>
                     </div>
                 </div>
