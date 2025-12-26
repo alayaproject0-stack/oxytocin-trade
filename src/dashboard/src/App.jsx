@@ -117,6 +117,47 @@ const App = () => {
         }));
     }, [data]);
 
+    const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
+
+    const requestSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ key, direction });
+    };
+
+    const getSortIndicator = (name) => {
+        if (sortConfig.key === name) {
+            return sortConfig.direction === 'asc' ? ' ↑' : ' ↓';
+        }
+        return '';
+    };
+
+    const sortedData = useMemo(() => {
+        if (!data) return [];
+        let sortableData = [...data.daily_data];
+        if (sortConfig.key !== null) {
+            sortableData.sort((a, b) => {
+                let aValue = a[sortConfig.key];
+                let bValue = b[sortConfig.key];
+
+                // Handle special cases
+                if (sortConfig.key === 'profit') aValue = parseFloat(aValue || 0);
+                if (sortConfig.key === 'price') aValue = parseFloat(aValue || 0);
+
+                if (aValue < bValue) {
+                    return sortConfig.direction === 'asc' ? -1 : 1;
+                }
+                if (aValue > bValue) {
+                    return sortConfig.direction === 'asc' ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+        return sortableData;
+    }, [data, sortConfig]);
+
     if (loading) return <div style={{ color: '#fff', textAlign: 'center', padding: '100px' }}>Loading Live Data...</div>;
     if (!data) return <div style={{ color: '#fff', textAlign: 'center', padding: '100px' }}>No Data Found. Please run simulation.</div>;
 
@@ -304,18 +345,18 @@ const App = () => {
                     <table className="trade-table" style={{ position: 'relative' }}>
                         <thead style={{ position: 'sticky', top: 0, background: '#0f1419', zIndex: 1 }}>
                             <tr>
-                                <th>Date</th>
-                                <th>Ticker</th>
-                                <th>Action</th>
-                                <th>Price</th>
+                                <th onClick={() => requestSort('date')} style={{ cursor: 'pointer' }}>Date{getSortIndicator('date')}</th>
+                                <th onClick={() => requestSort('ticker')} style={{ cursor: 'pointer' }}>Ticker{getSortIndicator('ticker')}</th>
+                                <th onClick={() => requestSort('action')} style={{ cursor: 'pointer' }}>Action{getSortIndicator('action')}</th>
+                                <th onClick={() => requestSort('price')} style={{ cursor: 'pointer' }}>Price{getSortIndicator('price')}</th>
                                 <th>Shares</th>
-                                <th>Profit</th>
+                                <th onClick={() => requestSort('profit')} style={{ cursor: 'pointer' }}>Profit{getSortIndicator('profit')}</th>
                                 <th>System</th>
                                 <th>Success</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {[...data.daily_data].reverse().map((trade, i) => {
+                            {sortedData.map((trade, i) => {
                                 // Calculate estimated shares (using balance * 0.2 / price as used in live_trader)
                                 const estimatedShares = trade.shares || (trade.action === 'BUY' ? ((trade.balance || 10000) * 0.2 / (trade.price || 1)).toFixed(4) : '-');
                                 return (
