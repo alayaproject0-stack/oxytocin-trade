@@ -34,7 +34,7 @@ from rl_agent import RLAgent
 
 # --- Configuration ---
 TICKERS = ["6762.T", "7203.T", "6758.T", "9984.T"]  # TDK, Toyota, Sony, Softbank
-INITIAL_BALANCE = 10000.0
+INITIAL_BALANCE = 1000000.0
 DATA_INTERVAL = "1m"
 FETCH_PERIOD = "1d"
 WINDOW_SIZE = 20

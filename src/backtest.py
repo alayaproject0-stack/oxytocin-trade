@@ -21,7 +21,7 @@ from rl_agent import RLAgent, GatePolicy
 
 # --- Configuration (same as live_trader_cloud.py) ---
 TICKERS = ["6762.T", "7203.T", "6758.T", "9984.T"]
-INITIAL_BALANCE = 10000.0
+INITIAL_BALANCE = 1000000.0
 WINDOW_SIZE = 20
 
 # Risk Management

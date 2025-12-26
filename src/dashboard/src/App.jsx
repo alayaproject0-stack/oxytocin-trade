@@ -48,7 +48,7 @@ const StatCard = ({ title, value, icon: Icon, color }) => (
     </motion.div>
 );
 
-const INITIAL_BALANCE = 10000;
+const INITIAL_BALANCE = 1000000;
 
 const App = () => {
     const [data, setData] = useState(null);
@@ -220,13 +220,13 @@ const App = () => {
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>元本 (Initial)</div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#fff' }}>
-                            ¥{(summary.initial_balance || 10000).toLocaleString()}
+                            ¥{(summary.initial_balance || 1000000).toLocaleString()}
                         </div>
                     </div>
                     <div>
                         <div style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '0.5rem' }}>現在価値 (Current)</div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, color: '#00d2ff' }}>
-                            ¥{(summary.final_balance || summary.current_balance || 10000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                            ¥{(summary.final_balance || summary.current_balance || 1000000).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
                     </div>
                     <div>
@@ -234,10 +234,10 @@ const App = () => {
                         <div style={{
                             fontSize: '1.8rem',
                             fontWeight: 700,
-                            color: ((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '#00f5d4' : '#ff4d4d'
+                            color: ((summary.final_balance || summary.current_balance || 1000000) - (summary.initial_balance || 1000000)) >= 0 ? '#00f5d4' : '#ff4d4d'
                         }}>
-                            {((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)) >= 0 ? '+' : ''}
-                            ¥{((summary.final_balance || summary.current_balance || 10000) - (summary.initial_balance || 10000)).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                            {((summary.final_balance || summary.current_balance || 1000000) - (summary.initial_balance || 1000000)) >= 0 ? '+' : ''}
+                            ¥{((summary.final_balance || summary.current_balance || 1000000) - (summary.initial_balance || 1000000)).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
                     </div>
                     <div>
@@ -357,8 +357,8 @@ const App = () => {
                         </thead>
                         <tbody>
                             {sortedData.map((trade, i) => {
-                                // Calculate estimated shares (using balance * 0.2 / price as used in live_trader)
-                                const estimatedShares = trade.shares || (trade.action === 'BUY' ? ((trade.balance || 10000) * 0.2 / (trade.price || 1)).toFixed(4) : '-');
+                                // Calculate estimated shares (using balance * 0.6 / price as used in live_trader)
+                                const estimatedShares = trade.shares || (trade.action === 'BUY' ? ((trade.balance || 1000000) * 0.6 / (trade.price || 1)).toFixed(4) : '-');
                                 return (
                                     <tr key={i}>
                                         <td>{trade.date}</td>
