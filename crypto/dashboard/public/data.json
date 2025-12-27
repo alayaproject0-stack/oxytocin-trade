@@ -1,0 +1,864 @@
+{
+  "summary": {
+    "ticker": "TDK",
+    "period": "6mo",
+    "initial_balance": 10000.0,
+    "final_balance": 14758.200689639221,
+    "roi_pct": 47.582006896392215,
+    "accuracy_pct": 76.47058823529412,
+    "system2_wake_rate_pct": 100.0,
+    "energy_saved_pct": 0.0
+  },
+  "daily_data": [
+    {
+      "date": "2025-08-15",
+      "balance": 10000.0,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLD",
+      "price": 1903.09619140625,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-08-18",
+      "balance": 10174.161981621908,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 1909.0511474609375,
+      "profit": 174.16198162190844
+    },
+    {
+      "date": "2025-08-19",
+      "balance": 10020.795517754488,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 1942.299560546875,
+      "profit": -153.36646386742024
+    },
+    {
+      "date": "2025-08-20",
+      "balance": 10020.795517754488,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 1913.0211181640625,
+      "profit": 20.838763110355924
+    },
+    {
+      "date": "2025-08-21",
+      "balance": 10028.65040948449,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 1899.1263427734375,
+      "profit": 7.854891730001516
+    },
+    {
+      "date": "2025-08-22",
+      "balance": 10028.65040948449,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 1900.614990234375,
+      "profit": 7.861048858343346
+    },
+    {
+      "date": "2025-08-25",
+      "balance": 10113.548760354603,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 1875.8028564453125,
+      "profit": 84.89835087011303
+    },
+    {
+      "date": "2025-08-26",
+      "balance": 10113.548760354603,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "SELL",
+      "price": 1891.6826171875,
+      "profit": 85.61706472353923
+    },
+    {
+      "date": "2025-08-27",
+      "balance": 10226.534641236247,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 1910.043701171875,
+      "profit": 112.98588088164361
+    },
+    {
+      "date": "2025-08-28",
+      "balance": 10226.534641236247,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 1931.3822021484375,
+      "profit": 114.24812913703775
+    },
+    {
+      "date": "2025-08-29",
+      "balance": 10226.534641236247,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 1921.457275390625,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-09-01",
+      "balance": 10226.534641236247,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 1900.1187744140625,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-09-02",
+      "balance": 10226.534641236247,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 1895.652587890625,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-09-03",
+      "balance": 10388.475069221206,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 1880.26904296875,
+      "profit": 161.940427984958
+    },
+    {
+      "date": "2025-09-04",
+      "balance": 10974.159196614757,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 1910.043701171875,
+      "profit": 585.6841273935512
+    },
+    {
+      "date": "2025-09-05",
+      "balance": 11233.26427974526,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2017.7286376953125,
+      "profit": 259.1050831305037
+    },
+    {
+      "date": "2025-09-08",
+      "balance": 10769.034477454,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2065.3681640625,
+      "profit": -464.22980229125983
+    },
+    {
+      "date": "2025-09-09",
+      "balance": 10879.694057610912,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 1980.0140380859375,
+      "profit": 110.65958015691137
+    },
+    {
+      "date": "2025-09-10",
+      "balance": 10879.694057610912,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2000.360107421875,
+      "profit": 694.876111048406
+    },
+    {
+      "date": "2025-09-11",
+      "balance": 10879.694057610912,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 1976.044189453125,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-09-12",
+      "balance": 11107.728562237344,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 1965.126708984375,
+      "profit": 228.03450462643278
+    },
+    {
+      "date": "2025-09-16",
+      "balance": 11497.85906101235,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2006.3150634765625,
+      "profit": 390.13049877500544
+    },
+    {
+      "date": "2025-09-17",
+      "balance": 11497.85906101235,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "SELL",
+      "price": 2076.78173828125,
+      "profit": 653.2880472487035
+    },
+    {
+      "date": "2025-09-18",
+      "balance": 11119.92078809035,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "BUY",
+      "price": 2143.774658203125,
+      "profit": -377.9382729219992
+    },
+    {
+      "date": "2025-09-19",
+      "balance": 11119.92078809035,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "SELL",
+      "price": 2073.30810546875,
+      "profit": -365.5153220594682
+    },
+    {
+      "date": "2025-09-22",
+      "balance": 10869.517370340722,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "BUY",
+      "price": 2159.654541015625,
+      "profit": -250.40341774962806
+    },
+    {
+      "date": "2025-09-24",
+      "balance": 10951.281854264209,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2111.0224609375,
+      "profit": 81.76448392348684
+    },
+    {
+      "date": "2025-09-25",
+      "balance": 10951.281854264209,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2126.90234375,
+      "profit": -166.08144348569954
+    },
+    {
+      "date": "2025-09-26",
+      "balance": 10951.281854264209,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2114.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-09-29",
+      "balance": 11201.537283449965,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2100.5,
+      "profit": 250.25542918575673
+    },
+    {
+      "date": "2025-09-30",
+      "balance": 11201.537283449965,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2148.5,
+      "profit": 255.97419167131554
+    },
+    {
+      "date": "2025-10-01",
+      "balance": 11381.226959145788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2119.5,
+      "profit": 179.68967569582392
+    },
+    {
+      "date": "2025-10-02",
+      "balance": 11381.226959145788,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "SELL",
+      "price": 2153.5,
+      "profit": 182.57217108325398
+    },
+    {
+      "date": "2025-10-03",
+      "balance": 11818.966457574472,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2210.0,
+      "profit": 437.73949842868416
+    },
+    {
+      "date": "2025-10-06",
+      "balance": 11818.966457574472,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2295.0,
+      "profit": 454.57563298363357
+    },
+    {
+      "date": "2025-10-07",
+      "balance": 11839.848023753932,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2264.0,
+      "profit": 20.881566179460197
+    },
+    {
+      "date": "2025-10-08",
+      "balance": 11910.32330960961,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2268.0,
+      "profit": 70.47528585567817
+    },
+    {
+      "date": "2025-10-09",
+      "balance": 11544.895901469057,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2281.5,
+      "profit": -365.42740814055344
+    },
+    {
+      "date": "2025-10-10",
+      "balance": 11171.637906011207,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2211.5,
+      "profit": -373.25799545785105
+    },
+    {
+      "date": "2025-10-14",
+      "balance": 11620.5915788696,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2140.0,
+      "profit": 448.9536728583943
+    },
+    {
+      "date": "2025-10-15",
+      "balance": 11889.44174343015,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2226.0,
+      "profit": 268.85016456055007
+    },
+    {
+      "date": "2025-10-16",
+      "balance": 11774.59312944312,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2277.5,
+      "profit": -114.8486139870311
+    },
+    {
+      "date": "2025-10-17",
+      "balance": 12419.311485233953,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2255.5,
+      "profit": 644.7183557908337
+    },
+    {
+      "date": "2025-10-20",
+      "balance": 12756.026739877749,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2379.0,
+      "profit": 336.71525464379573
+    },
+    {
+      "date": "2025-10-21",
+      "balance": 12933.52005240316,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2443.5,
+      "profit": 177.49331252541168
+    },
+    {
+      "date": "2025-10-22",
+      "balance": 12933.52005240316,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2477.5,
+      "profit": 1219.6583618321886
+    },
+    {
+      "date": "2025-10-23",
+      "balance": 12933.52005240316,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLD",
+      "price": 2409.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-10-24",
+      "balance": 13242.983356010196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2528.5,
+      "profit": 309.46330360703627
+    },
+    {
+      "date": "2025-10-27",
+      "balance": 13242.983356010196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2589.0,
+      "profit": 316.8679031198801
+    },
+    {
+      "date": "2025-10-28",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2572.5,
+      "profit": 97.81017833399173
+    },
+    {
+      "date": "2025-10-29",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2591.5,
+      "profit": 98.53258587076368
+    },
+    {
+      "date": "2025-10-30",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLD",
+      "price": 2571.5,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-10-31",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2673.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-04",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2595.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-05",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLD",
+      "price": 2513.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-06",
+      "balance": 13340.793534344188,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2556.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-07",
+      "balance": 13407.684797552893,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2493.0,
+      "profit": 66.89126320870531
+    },
+    {
+      "date": "2025-11-10",
+      "balance": 13102.660637321196,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2505.5,
+      "profit": -305.0241602316962
+    },
+    {
+      "date": "2025-11-11",
+      "balance": 13747.492414653116,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2448.5,
+      "profit": 644.8317773319192
+    },
+    {
+      "date": "2025-11-12",
+      "balance": 13747.492414653116,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2569.0,
+      "profit": 419.09724168216474
+    },
+    {
+      "date": "2025-11-13",
+      "balance": 13747.492414653116,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2553.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-14",
+      "balance": 13747.492414653116,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2535.5,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-17",
+      "balance": 13747.492414653116,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2504.5,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-18",
+      "balance": 13747.492414653116,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2414.5,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-11-19",
+      "balance": 14307.617993603671,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2393.0,
+      "profit": 560.1255789505553
+    },
+    {
+      "date": "2025-11-20",
+      "balance": 14307.617993603671,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2490.5,
+      "profit": 582.9472437845207
+    },
+    {
+      "date": "2025-11-21",
+      "balance": 14574.385265081677,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2413.5,
+      "profit": 266.76727147800506
+    },
+    {
+      "date": "2025-11-25",
+      "balance": 14633.666880965679,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2458.5,
+      "profit": 59.28161588400113
+    },
+    {
+      "date": "2025-11-26",
+      "balance": 14633.666880965679,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "SELL",
+      "price": 2468.5,
+      "profit": 333.4790463862077
+    },
+    {
+      "date": "2025-11-27",
+      "balance": 14653.705157211132,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2556.0,
+      "profit": 20.038276245453787
+    },
+    {
+      "date": "2025-11-28",
+      "balance": 14653.705157211132,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2559.5,
+      "profit": 20.06571519962401
+    },
+    {
+      "date": "2025-12-01",
+      "balance": 14733.55380287101,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2477.5,
+      "profit": 79.84864565987903
+    },
+    {
+      "date": "2025-12-02",
+      "balance": 14375.713576024886,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2491.0,
+      "profit": -357.84022684612455
+    },
+    {
+      "date": "2025-12-03",
+      "balance": 14674.406657937767,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2430.5,
+      "profit": 298.69308191288076
+    },
+    {
+      "date": "2025-12-04",
+      "balance": 14390.500362258197,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "HOLDING",
+      "price": 2481.0,
+      "profit": -283.90629567956984
+    },
+    {
+      "date": "2025-12-05",
+      "balance": 14467.391650671414,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLDING",
+      "price": 2433.0,
+      "profit": 76.89128841321683
+    },
+    {
+      "date": "2025-12-08",
+      "balance": 14467.391650671414,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2446.0,
+      "profit": -183.94463652720466
+    },
+    {
+      "date": "2025-12-09",
+      "balance": 14467.391650671414,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2382.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-12-10",
+      "balance": 14467.391650671414,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2362.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-12-11",
+      "balance": 14877.566051316824,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "BUY",
+      "price": 2275.0,
+      "profit": 410.1744006454093
+    },
+    {
+      "date": "2025-12-12",
+      "balance": 14877.566051316824,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2339.5,
+      "profit": 421.8035210153561
+    },
+    {
+      "date": "2025-12-15",
+      "balance": 14758.200689639221,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": false,
+      "action": "BUY",
+      "price": 2243.5,
+      "profit": -119.36536167760323
+    },
+    {
+      "date": "2025-12-16",
+      "balance": 14758.200689639221,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "SELL",
+      "price": 2225.5,
+      "profit": -118.40767212547627
+    },
+    {
+      "date": "2025-12-17",
+      "balance": 14758.200689639221,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2223.0,
+      "profit": 0.0
+    },
+    {
+      "date": "2025-12-18",
+      "balance": 14758.200689639221,
+      "confidence": 0.5,
+      "system2_used": true,
+      "correct": true,
+      "action": "HOLD",
+      "price": 2218.5,
+      "profit": 0.0
+    }
+  ]
+}

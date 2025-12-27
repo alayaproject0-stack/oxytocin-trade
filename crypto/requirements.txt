@@ -1,0 +1,9 @@
+torch
+pandas
+yfinance
+transformers
+ta
+python-dotenv
+requests
+numpy
+supabase
