@@ -20,7 +20,7 @@ from models_snn import SNNClassifier
 from rl_agent import RLAgent, GatePolicy
 
 # --- Configuration (Crypto) ---
-TICKERS = ["BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD", "DOGE-USD"]
+TICKERS = ["BTC-USD", "ETH-USD", "SOL-USD"]
 INITIAL_BALANCE = 10000.0 # $10,000 USD
 WINDOW_SIZE = 20
 
@@ -164,7 +164,7 @@ def run_backtest(ticker: str, period: str, device):
     
     # Load weights if available
     try:
-        snn.load_state_dict(torch.load("snn_model.pt", map_location=device, weights_only=True))
+        snn.load_state_dict(torch.load("snn_model_latest.pth", map_location=device, weights_only=True))
         print("[INFO] Loaded SNN model weights")
     except:
         print("[WARN] No SNN weights found, using random initialization")

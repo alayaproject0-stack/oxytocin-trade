@@ -34,7 +34,7 @@ from rl_agent import RLAgent
 
 # --- Configuration ---
 # --- Configuration (Crypto) ---
-TICKERS = ["BTC-USD", "ETH-USD", "SOL-USD", "XRP-USD", "DOGE-USD"]
+TICKERS = ["BTC-USD", "ETH-USD", "SOL-USD"] # Removed XRP, DOGE (Low performance)
 INITIAL_BALANCE = 10000.0 # $10,000 Start
 DATA_INTERVAL = "1m"
 FETCH_PERIOD = "1d"
