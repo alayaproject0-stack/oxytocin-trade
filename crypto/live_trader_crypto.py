@@ -363,8 +363,8 @@ def main():
                     save_position_to_supabase(ticker, shares, current_price)
                     print(f"  [{ticker}] BUY {shares:.4f} shares @ ${current_price:.2f} (conf: {confidence:.2f}, sma20: {current_sma_20:.2f})")
             
-            # Save trade (only if action is not HOLD to reduce noise)
-            if action != "HOLD":
+            # Save trade (only if action is meaningful)
+            if action not in ["HOLD", "HOLDING"]:
                 save_trade_to_supabase(ticker, action, current_price, profit, confidence, system2_used, state["balance"])
         
         # Calculate total value
