@@ -145,6 +145,7 @@ def update_dashboard_summary(balance, total_value, roi_pct):
         return
     try:
         supabase.table("dashboard_summary").update({
+            "initial_balance": INITIAL_BALANCE,  # Sync Initial Balance
             "current_balance": balance,
             "total_value": total_value,
             "roi_pct": roi_pct,
