@@ -262,6 +262,8 @@ def run_inference(snn, rl, features, device):
     return pred.item(), conf.item(), bool(should_wake)
 
 
+def main():
+    """Main trading loop using System 2 (Sentiment Analysis) only."""
     # Load System 2 Models
     print("Initializing System 2 (Sentiment Analysis)...")
     from news_fetcher import NewsFetcher
